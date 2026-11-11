@@ -44,8 +44,6 @@ function SignupPageInner() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const supabase = createClient();
-
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -61,6 +59,8 @@ function SignupPageInner() {
     }
 
     setLoading(true);
+
+    const supabase = createClient();
 
     // Always name our own origin as the place the confirmation link
     // returns to. Previously this was left unset unless an invite was

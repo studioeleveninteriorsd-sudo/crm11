@@ -15,7 +15,7 @@
 // away from the very page they need.
 // ============================================================
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
@@ -35,7 +35,8 @@ type Status = "checking" | "ready" | "expired" | "done";
 
 export default function ResetPasswordPage() {
   const t = useTranslations("ResetPasswordPage");
-  const supabase = createClient();
+  // useMemo ensures createClient() runs only once per mount (not during SSR prerender)
+  const supabase = useMemo(() => createClient(), []);
 
   const [status, setStatus] = useState<Status>("checking");
   const [password, setPassword] = useState("");
